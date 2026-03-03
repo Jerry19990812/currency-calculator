@@ -664,9 +664,17 @@ function calcConfirm() {
 updateUI();
 fetchRates();
 
-// Register Service Worker
+// Unregister old service workers and clear caches, then register fresh
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js').catch(() => {});
+  navigator.serviceWorker.getRegistrations().then(regs => {
+    regs.forEach(r => r.unregister());
+  });
+  caches.keys().then(keys => {
+    keys.forEach(k => caches.delete(k));
+  });
+  setTimeout(() => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  }, 1000);
 }
 </script>
 </body>
