@@ -31,72 +31,75 @@
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
 
-    .app { max-width: 440px; margin: 0 auto; }
+    .app {
+      max-width: 440px; margin: 0 auto;
+      min-height: 100vh; min-height: 100dvh;
+      display: flex; flex-direction: column;
+      padding-bottom: 8px;
+    }
 
     /* Header */
-    .header { padding-top: 48px; margin-bottom: 32px; animation: fadeIn 0.5s ease; }
-    .header-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+    .header { padding-top: 24px; margin-bottom: 16px; animation: fadeIn 0.5s ease; }
+    .header-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
     .logo {
-      width: 36px; height: 36px; border-radius: 10px;
+      width: 32px; height: 32px; border-radius: 8px;
       background: linear-gradient(135deg, #00d4aa, #00b4d8);
-      display: flex; align-items: center; justify-content: center; font-size: 18px;
+      display: flex; align-items: center; justify-content: center; font-size: 16px;
     }
-    .header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
-    .status-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
-    .status-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-    }
+    .header h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
+    .status-row { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; }
     .status-dot.loading { background: #f0a500; animation: pulse 1s infinite; }
     .status-dot.ready { background: #00d4aa; }
-    .status-text { color: #6b6f85; font-size: 12px; }
+    .status-text { color: #6b6f85; font-size: 11px; }
     .refresh-btn {
       background: none; border: none; color: #00d4aa; cursor: pointer;
-      font-size: 12px; padding: 2px 8px; border-radius: 6px; font-family: inherit;
+      font-size: 11px; padding: 2px 8px; border-radius: 6px; font-family: inherit;
     }
     .refresh-btn:active { background: rgba(0,212,170,0.15); }
 
     /* Main Card */
     .card {
       background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 24px; padding: 24px; animation: fadeIn 0.6s ease 0.1s both;
+      border-radius: 20px; padding: 18px; animation: fadeIn 0.6s ease 0.1s both;
     }
-    .section-label { color: #6b6f85; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
-    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .section-label { color: #6b6f85; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
 
     .currency-btn {
       display: flex; align-items: center; gap: 8px;
       background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 12px; padding: 8px 14px; cursor: pointer; font-family: inherit;
+      border-radius: 12px; padding: 6px 12px; cursor: pointer; font-family: inherit;
     }
     .currency-btn:active { background: rgba(255,255,255,0.12); }
-    .currency-btn .flag { font-size: 20px; }
-    .currency-btn .code { color: #fff; font-weight: 600; font-size: 14px; }
-    .currency-btn .arrow { color: #6b6f85; font-size: 11px; }
+    .currency-btn .flag { font-size: 18px; }
+    .currency-btn .code { color: #fff; font-weight: 600; font-size: 13px; }
+    .currency-btn .arrow { color: #6b6f85; font-size: 10px; }
 
     .input-box {
-      border-radius: 16px; padding: 16px 20px; transition: all 0.3s;
+      border-radius: 14px; padding: 12px 16px; transition: all 0.3s;
       background: rgba(255,255,255,0.04); border: 1.5px solid rgba(255,255,255,0.06);
     }
     .input-box.focused {
       background: rgba(0,212,170,0.06); border-color: rgba(0,212,170,0.3);
     }
-    .input-label { color: #6b6f85; font-size: 11px; margin-bottom: 6px; }
+    .input-label { color: #6b6f85; font-size: 11px; margin-bottom: 4px; }
     .input-row { display: flex; align-items: center; gap: 8px; }
-    .input-symbol { color: #4a4e69; font-size: 20px; font-weight: 500; }
+    .input-symbol { color: #4a4e69; font-size: 18px; font-weight: 500; }
     .amount-input {
       background: none; border: none; outline: none; color: #fff;
-      font-size: 32px; font-weight: 600; width: 100%;
+      font-size: 28px; font-weight: 600; width: 100%;
       font-family: 'JetBrains Mono', monospace;
     }
 
     /* Swap Button */
-    .swap-wrap { display: flex; justify-content: center; margin: 4px 0; position: relative; z-index: 2; }
+    .swap-wrap { display: flex; justify-content: center; margin: 2px 0; position: relative; z-index: 2; }
     .swap-btn {
-      width: 44px; height: 44px; border-radius: 50%;
+      width: 40px; height: 40px; border-radius: 50%;
       background: linear-gradient(135deg, #00d4aa, #00b4d8);
       border: 3px solid #1a1a2e; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      font-size: 18px; color: #1a1a2e; font-weight: 700;
+      font-size: 16px; color: #1a1a2e; font-weight: 700;
       box-shadow: 0 4px 20px rgba(0,212,170,0.3);
       transition: transform 0.3s;
     }
@@ -105,47 +108,53 @@
     /* Result Box */
     .result-box {
       background: rgba(0,212,170,0.04); border: 1.5px solid rgba(0,212,170,0.15);
-      border-radius: 16px; padding: 16px 20px;
+      border-radius: 14px; padding: 12px 16px;
     }
-    .result-symbol { color: #00d4aa; font-size: 20px; font-weight: 500; }
+    .result-symbol { color: #00d4aa; font-size: 18px; font-weight: 500; }
     .result-value {
-      color: #00d4aa; font-size: 32px; font-weight: 600;
+      color: #00d4aa; font-size: 28px; font-weight: 600;
       font-family: 'JetBrains Mono', monospace;
     }
 
     /* Rate Info */
     .rate-info {
-      margin-top: 20px; padding: 14px 18px; background: rgba(255,255,255,0.02);
-      border-radius: 12px; border: 1px solid rgba(255,255,255,0.04);
+      margin-top: 14px; padding: 10px 14px; background: rgba(255,255,255,0.02);
+      border-radius: 10px; border: 1px solid rgba(255,255,255,0.04);
       display: flex; justify-content: space-between; align-items: center;
     }
-    .rate-label { color: #6b6f85; font-size: 12px; }
-    .rate-value { color: #8b8fa3; font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+    .rate-label { color: #6b6f85; font-size: 11px; }
+    .rate-value { color: #8b8fa3; font-size: 12px; font-family: 'JetBrains Mono', monospace; }
 
     /* Quick Convert */
-    .quick-section { margin-top: 20px; animation: fadeIn 0.7s ease 0.2s both; }
-    .quick-title { color: #6b6f85; font-size: 12px; letter-spacing: 1px; margin-bottom: 12px; padding-left: 4px; }
-    .quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .quick-section { margin-top: 14px; flex: 1; animation: fadeIn 0.7s ease 0.2s both; }
+    .quick-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 0 4px; }
+    .quick-title { color: #6b6f85; font-size: 11px; letter-spacing: 1px; }
+    .quick-edit-btn {
+      background: none; border: none; color: #6b6f85; cursor: pointer;
+      font-size: 14px; padding: 2px 6px; border-radius: 6px;
+    }
+    .quick-edit-btn:active { background: rgba(255,255,255,0.08); }
+    .quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .quick-card {
       background: rgba(0,212,170,0.06); border: 1px solid rgba(0,212,170,0.18);
-      border-radius: 16px; padding: 14px 16px; cursor: pointer;
+      border-radius: 14px; padding: 12px 14px; cursor: pointer;
       text-align: left; font-family: inherit; color: inherit;
-      transition: all 0.2s;
+      transition: all 0.2s; position: relative;
     }
     .quick-card:active { background: rgba(0,212,170,0.15); transform: translateY(-1px); }
-    .quick-flags { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
-    .quick-flags span.f { font-size: 18px; }
-    .quick-flags span.arr { color: #00d4aa; font-size: 13px; font-weight: 600; }
+    .quick-flags { display: flex; align-items: center; gap: 5px; margin-bottom: 6px; }
+    .quick-flags span.f { font-size: 16px; }
+    .quick-flags span.arr { color: #00d4aa; font-size: 12px; font-weight: 600; }
     .quick-rate {
-      color: #00f5c8; font-size: 18px; font-weight: 700;
+      color: #00f5c8; font-size: 16px; font-weight: 700;
       font-family: 'JetBrains Mono', monospace;
       text-shadow: 0 0 12px rgba(0,212,170,0.3);
     }
-    .quick-desc { color: #a0e8d8; font-size: 12px; margin-top: 4px; font-weight: 500; }
+    .quick-desc { color: #a0e8d8; font-size: 11px; margin-top: 3px; font-weight: 500; }
 
     /* Footer */
     .footer {
-      color: #3a3e52; font-size: 11px; margin-top: 32px; margin-bottom: 24px;
+      color: #3a3e52; font-size: 10px; margin-top: 10px;
       text-align: center; animation: fadeIn 0.8s ease 0.3s both;
     }
 
@@ -157,7 +166,7 @@
     }
     .picker-sheet {
       background: #1a1a2e; border-radius: 24px 24px 0 0;
-      width: 100%; max-width: 480; max-height: 70vh; overflow: hidden;
+      width: 100%; max-width: 480px; max-height: 70vh; overflow: hidden;
       animation: slideUp 0.3s ease;
     }
     .picker-header {
@@ -237,22 +246,53 @@
       transition: all 0.1s;
     }
     .calc-key:active { transform: scale(0.93); }
-    .calc-key.num {
-      background: rgba(255,255,255,0.08); color: #fff;
-    }
+    .calc-key.num { background: rgba(255,255,255,0.08); color: #fff; }
     .calc-key.num:active { background: rgba(255,255,255,0.15); }
-    .calc-key.op {
-      background: rgba(0,212,170,0.15); color: #00d4aa;
-    }
+    .calc-key.op { background: rgba(0,212,170,0.15); color: #00d4aa; }
     .calc-key.op:active { background: rgba(0,212,170,0.3); }
-    .calc-key.action {
-      background: rgba(255,82,82,0.15); color: #ff5252;
-    }
+    .calc-key.action { background: rgba(255,82,82,0.15); color: #ff5252; }
     .calc-key.action:active { background: rgba(255,82,82,0.3); }
-    .calc-key.enter {
+    .calc-key.enter { background: linear-gradient(135deg, #00d4aa, #00b4d8); color: #1a1a2e; }
+    .calc-key.enter:active { opacity: 0.8; }
+
+    /* Edit Quick Pair Modal */
+    .edit-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7); backdrop-filter: blur(10px);
+      z-index: 1002; display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    .edit-panel {
+      background: #1a1a2e; border-radius: 20px; width: 100%; max-width: 320px;
+      padding: 20px; animation: slideUp 0.25s ease;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .edit-title { color: #8b8fa3; font-size: 13px; letter-spacing: 1px; margin-bottom: 16px; }
+    .edit-row {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+    }
+    .edit-label { color: #6b6f85; font-size: 12px; width: 24px; }
+    .edit-select {
+      flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px; padding: 10px 14px; color: #fff; font-size: 14px;
+      font-family: inherit; cursor: pointer; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%236b6f85'%3E%3Cpath d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center;
+    }
+    .edit-select option { background: #1a1a2e; color: #fff; }
+    .edit-btns { display: flex; gap: 8px; margin-top: 16px; }
+    .edit-btn-cancel {
+      flex: 1; padding: 10px; border-radius: 10px; border: none; cursor: pointer;
+      font-family: inherit; font-size: 14px; font-weight: 600;
+      background: rgba(255,255,255,0.08); color: #8b8fa3;
+    }
+    .edit-btn-save {
+      flex: 1; padding: 10px; border-radius: 10px; border: none; cursor: pointer;
+      font-family: inherit; font-size: 14px; font-weight: 600;
       background: linear-gradient(135deg, #00d4aa, #00b4d8); color: #1a1a2e;
     }
-    .calc-key.enter:active { opacity: 0.8; }
+    .edit-btn-cancel:active { background: rgba(255,255,255,0.15); }
+    .edit-btn-save:active { opacity: 0.8; }
   </style>
 </head>
 <body>
@@ -330,7 +370,10 @@
 
   <!-- Quick Convert -->
   <div class="quick-section">
-    <div class="quick-title">常用換算</div>
+    <div class="quick-header">
+      <span class="quick-title">常用換算</span>
+      <button class="quick-edit-btn" onclick="openEditQuick()" title="編輯">✏️</button>
+    </div>
     <div class="quick-grid" id="quickGrid"></div>
   </div>
 
@@ -353,22 +396,18 @@
       <button class="calc-key action" onclick="calcBackspace()">⌫</button>
       <button class="calc-key op" onclick="calcInput('%')">%</button>
       <button class="calc-key op" onclick="calcInput('÷')">÷</button>
-
       <button class="calc-key num" onclick="calcInput('7')">7</button>
       <button class="calc-key num" onclick="calcInput('8')">8</button>
       <button class="calc-key num" onclick="calcInput('9')">9</button>
       <button class="calc-key op" onclick="calcInput('×')">×</button>
-
       <button class="calc-key num" onclick="calcInput('4')">4</button>
       <button class="calc-key num" onclick="calcInput('5')">5</button>
       <button class="calc-key num" onclick="calcInput('6')">6</button>
       <button class="calc-key op" onclick="calcInput('-')">−</button>
-
       <button class="calc-key num" onclick="calcInput('1')">1</button>
       <button class="calc-key num" onclick="calcInput('2')">2</button>
       <button class="calc-key num" onclick="calcInput('3')">3</button>
       <button class="calc-key op" onclick="calcInput('+')">+</button>
-
       <button class="calc-key num" onclick="calcInput('00')">00</button>
       <button class="calc-key num" onclick="calcInput('0')">0</button>
       <button class="calc-key num" onclick="calcInput('.')">.</button>
@@ -385,6 +424,18 @@
       <button class="picker-close" onclick="closePicker()">✕</button>
     </div>
     <div class="picker-list" id="pickerList"></div>
+  </div>
+</div>
+
+<!-- Edit Quick Pair Modal -->
+<div class="edit-overlay hidden" id="editOverlay" onclick="closeEditQuick()">
+  <div class="edit-panel" onclick="event.stopPropagation()">
+    <div class="edit-title">編輯常用換算</div>
+    <div id="editRows"></div>
+    <div class="edit-btns">
+      <button class="edit-btn-cancel" onclick="closeEditQuick()">取消</button>
+      <button class="edit-btn-save" onclick="saveEditQuick()">儲存</button>
+    </div>
   </div>
 </div>
 
@@ -415,18 +466,29 @@ const FALLBACK_RATES = {
   CHF:0.87, VND:25550, MYR:4.36, PHP:56.8
 };
 
-const QUICK_PAIRS = [
+const DEFAULT_QUICK_PAIRS = [
   { from: "USD", to: "TWD" },
   { from: "JPY", to: "TWD" },
-  { from: "EUR", to: "TWD" },
-  { from: "CNY", to: "TWD" },
 ];
 
 // ========== STATE ==========
 let rates = { ...FALLBACK_RATES };
 let fromCurrency = "USD";
 let toCurrency = "TWD";
-let pickerTarget = "from"; // "from" or "to"
+let pickerTarget = "from";
+let quickPairs = loadQuickPairs();
+
+function loadQuickPairs() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('quickPairs'));
+    if (saved && saved.length === 2) return saved;
+  } catch {}
+  return [...DEFAULT_QUICK_PAIRS];
+}
+
+function saveQuickPairs() {
+  localStorage.setItem('quickPairs', JSON.stringify(quickPairs));
+}
 
 // ========== HELPERS ==========
 function getCurrency(code) {
@@ -478,7 +540,7 @@ function calculate() {
 function updateQuickCards() {
   const grid = document.getElementById('quickGrid');
   grid.innerHTML = '';
-  QUICK_PAIRS.forEach(({ from, to }) => {
+  quickPairs.forEach(({ from, to }) => {
     const fc = getCurrency(from);
     const tc = getCurrency(to);
     const r = convert("1", from, to);
@@ -542,6 +604,52 @@ function closePicker() {
   document.getElementById('pickerOverlay').classList.add('hidden');
 }
 
+// ========== EDIT QUICK PAIRS ==========
+function openEditQuick() {
+  const container = document.getElementById('editRows');
+  container.innerHTML = '';
+  quickPairs.forEach((pair, i) => {
+    const row1 = document.createElement('div');
+    row1.className = 'edit-row';
+    row1.innerHTML = `
+      <span class="edit-label">從</span>
+      <select class="edit-select" id="editFrom${i}">
+        ${CURRENCIES.map(c => `<option value="${c.code}" ${c.code === pair.from ? 'selected' : ''}>${c.flag} ${c.code} ${c.name}</option>`).join('')}
+      </select>
+    `;
+    const row2 = document.createElement('div');
+    row2.className = 'edit-row';
+    row2.innerHTML = `
+      <span class="edit-label">至</span>
+      <select class="edit-select" id="editTo${i}">
+        ${CURRENCIES.map(c => `<option value="${c.code}" ${c.code === pair.to ? 'selected' : ''}>${c.flag} ${c.code} ${c.name}</option>`).join('')}
+      </select>
+    `;
+    container.appendChild(row1);
+    container.appendChild(row2);
+    if (i < quickPairs.length - 1) {
+      const hr = document.createElement('div');
+      hr.style.cssText = 'border-top: 1px solid rgba(255,255,255,0.06); margin: 8px 0;';
+      container.appendChild(hr);
+    }
+  });
+  document.getElementById('editOverlay').classList.remove('hidden');
+}
+
+function closeEditQuick() {
+  document.getElementById('editOverlay').classList.add('hidden');
+}
+
+function saveEditQuick() {
+  quickPairs = quickPairs.map((_, i) => ({
+    from: document.getElementById(`editFrom${i}`).value,
+    to: document.getElementById(`editTo${i}`).value,
+  }));
+  saveQuickPairs();
+  updateQuickCards();
+  closeEditQuick();
+}
+
 // ========== FETCH RATES ==========
 async function fetchRates() {
   const dot = document.getElementById('statusDot');
@@ -597,7 +705,6 @@ function calcInput(ch) {
   calcHasResult = false;
   document.getElementById('calcExpr').textContent = calcStr;
 
-  // Try to evaluate in real-time
   try {
     const result = evalCalc(calcStr);
     if (result !== null && !isNaN(result) && isFinite(result)) {
@@ -629,13 +736,11 @@ function calcBackspace() {
 }
 
 function evalCalc(str) {
-  // Replace display symbols with JS operators
   let expr = str
     .replace(/×/g, '*')
     .replace(/÷/g, '/')
     .replace(/−/g, '-')
     .replace(/%/g, '/100');
-  // Safety: only allow numbers and operators
   if (/^[\d\s\+\-\*\/\.\(\)]+$/.test(expr)) {
     return Function('"use strict"; return (' + expr + ')')();
   }
@@ -650,7 +755,6 @@ function formatCalcNum(n) {
 
 function calcConfirm() {
   const display = document.getElementById('calcDisplay').textContent;
-  // Parse the displayed number (remove commas)
   const num = parseFloat(display.replace(/,/g, ''));
   if (!isNaN(num)) {
     document.getElementById('amountInput').value = num;
