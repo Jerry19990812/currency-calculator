@@ -179,8 +179,8 @@
     .picker-item.selected { background: rgba(0,212,170,0.12); }
     .picker-item .flag { font-size: 28px; }
     .picker-item .info { text-align: left; flex: 1; }
-    .picker-item .code { color: #fff; font-size: 15px; font-weight: 600; }
-    .picker-item .name { color: #6b6f85; font-size: 12px; margin-top: 2px; }
+    .picker-item .code { color: #ffffff; font-size: 15px; font-weight: 600; }
+    .picker-item .name { color: #a0a8b8; font-size: 12px; margin-top: 2px; }
     .picker-check {
       width: 24px; height: 24px; border-radius: 50%; background: #00d4aa;
       display: flex; align-items: center; justify-content: center;
@@ -527,7 +527,7 @@ function openPicker(target) {
     item.innerHTML = `
       <span class="flag">${c.flag}</span>
       <div class="info">
-        <div class="code">${c.code}</div>
+        <div class="code">${c.flag} ${c.code}</div>
         <div class="name">${c.name}</div>
       </div>
       ${c.code === selected ? '<div class="picker-check">✓</div>' : ''}
