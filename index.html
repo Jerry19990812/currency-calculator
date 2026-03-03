@@ -469,6 +469,8 @@ const FALLBACK_RATES = {
 const DEFAULT_QUICK_PAIRS = [
   { from: "USD", to: "TWD" },
   { from: "JPY", to: "TWD" },
+  { from: "EUR", to: "TWD" },
+  { from: "CNY", to: "TWD" },
 ];
 
 // ========== STATE ==========
@@ -481,7 +483,7 @@ let quickPairs = loadQuickPairs();
 function loadQuickPairs() {
   try {
     const saved = JSON.parse(localStorage.getItem('quickPairs'));
-    if (saved && saved.length === 2) return saved;
+    if (saved && saved.length === 4) return saved;
   } catch {}
   return [...DEFAULT_QUICK_PAIRS];
 }
