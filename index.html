@@ -374,28 +374,6 @@
     }
     .calc-key.enter:active { opacity: 0.8; }
 
-    /* Calculator History */
-    .calc-history-section { margin-top: 16px; }
-    .calc-history-header {
-      display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;
-    }
-    .calc-history-title { color: var(--text-secondary); font-size: 11px; letter-spacing: 1px; }
-    .calc-history-clear {
-      background: none; border: none; color: var(--danger-color); cursor: pointer;
-      font-size: 11px; padding: 2px 6px; border-radius: 4px; font-family: inherit;
-    }
-    .calc-history-clear:active { background: var(--danger-bg); }
-    .calc-history-list { display: flex; flex-direction: column; gap: 4px; max-height: 150px; overflow-y: auto; }
-    .calc-history-item {
-      background: var(--bg-input); border: 1px solid var(--bg-input-border);
-      border-radius: 10px; padding: 8px 12px; cursor: pointer;
-      font-family: inherit; color: inherit; text-align: left; width: 100%;
-      transition: all 0.15s; display: flex; justify-content: space-between; align-items: center;
-    }
-    .calc-history-item:active { background: var(--bg-hover); }
-    .calc-history-item .expr { color: var(--text-secondary); font-size: 12px; font-family: 'JetBrains Mono', monospace; }
-    .calc-history-item .result { color: var(--accent); font-size: 14px; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
-    .calc-history-empty { color: var(--text-secondary); font-size: 12px; text-align: center; padding: 8px; }
   </style>
 </head>
 <body>
@@ -528,16 +506,6 @@
       <button class="calc-key num" onclick="calcInput('0')">0</button>
       <button class="calc-key num" onclick="calcInput('.')">.</button>
       <button class="calc-key enter" onclick="calcConfirm()">✓</button>
-    </div>
-    <!-- Calculator History -->
-    <div class="calc-history-section">
-      <div class="calc-history-header">
-        <span class="calc-history-title">計算歷史</span>
-        <button class="calc-history-clear hidden" id="calcHistoryClearBtn" onclick="clearCalcHistory()">清除</button>
-      </div>
-      <div class="calc-history-list" id="calcHistoryList">
-        <div class="calc-history-empty">尚無計算紀錄</div>
-      </div>
     </div>
   </div>
 </div>
@@ -773,7 +741,6 @@ function openCalc() {
   document.getElementById('calcExpr').textContent = '';
   document.getElementById('calcDisplay').textContent = '0';
   document.getElementById('calcOverlay').classList.remove('hidden');
-  renderCalcHistory();
 }
 
 function closeCalc() {
@@ -841,70 +808,10 @@ function calcConfirm() {
   const display = document.getElementById('calcDisplay').textContent;
   const num = parseFloat(display.replace(/,/g, ''));
   if (!isNaN(num)) {
-    // Save to calc history
-    if (calcStr) {
-      addCalcHistory(calcStr, display);
-    }
     document.getElementById('amountInput').value = num;
     calculate();
   }
   closeCalc();
-}
-
-// ========== CALCULATOR HISTORY ==========
-function getCalcHistory() {
-  try {
-    return JSON.parse(localStorage.getItem('calcHistory') || '[]');
-  } catch { return []; }
-}
-
-function saveCalcHistory(history) {
-  localStorage.setItem('calcHistory', JSON.stringify(history));
-}
-
-function addCalcHistory(expr, result) {
-  const history = getCalcHistory();
-  history.unshift({ expr, result });
-  if (history.length > 10) history.length = 10;
-  saveCalcHistory(history);
-  renderCalcHistory();
-}
-
-function clearCalcHistory() {
-  localStorage.removeItem('calcHistory');
-  renderCalcHistory();
-}
-
-function renderCalcHistory() {
-  const list = document.getElementById('calcHistoryList');
-  const clearBtn = document.getElementById('calcHistoryClearBtn');
-  const history = getCalcHistory();
-
-  if (history.length === 0) {
-    list.innerHTML = '<div class="calc-history-empty">尚無計算紀錄</div>';
-    clearBtn.classList.add('hidden');
-    return;
-  }
-
-  clearBtn.classList.remove('hidden');
-  list.innerHTML = '';
-  history.forEach((item, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'calc-history-item';
-    btn.onclick = () => {
-      const num = parseFloat(item.result.replace(/,/g, ''));
-      if (!isNaN(num)) {
-        document.getElementById('amountInput').value = num;
-        calculate();
-      }
-      closeCalc();
-    };
-    btn.innerHTML = `
-      <span class="expr">${item.expr}</span>
-      <span class="result">= ${item.result}</span>
-    `;
-    list.appendChild(btn);
-  });
 }
 
 // ========== CONVERSION HISTORY ==========
