@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-TW" data-theme="dark">
+<html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -14,108 +14,15 @@
   <title>匯率計算機</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    /* ===== Theme Variables ===== */
-    :root,
-    [data-theme="dark"] {
-      --bg-primary: #0f0f1a;
-      --bg-gradient: linear-gradient(160deg, #0f0f1a 0%, #1a1a2e 40%, #16213e 100%);
-      --bg-card: rgba(255,255,255,0.03);
-      --bg-card-border: rgba(255,255,255,0.06);
-      --bg-input: rgba(255,255,255,0.04);
-      --bg-input-border: rgba(255,255,255,0.06);
-      --bg-input-focused: rgba(0,212,170,0.06);
-      --bg-input-focused-border: rgba(0,212,170,0.3);
-      --bg-modal: #1a1a2e;
-      --bg-modal-border: rgba(255,255,255,0.08);
-      --bg-hover: rgba(255,255,255,0.08);
-      --bg-btn: rgba(255,255,255,0.06);
-      --bg-btn-border: rgba(255,255,255,0.08);
-      --bg-btn-active: rgba(255,255,255,0.12);
-      --bg-rate-info: rgba(255,255,255,0.02);
-      --bg-rate-info-border: rgba(255,255,255,0.04);
-      --bg-calc-display: rgba(0,0,0,0.3);
-      --bg-calc-num: rgba(255,255,255,0.08);
-      --bg-calc-num-active: rgba(255,255,255,0.15);
-      --text-primary: #fff;
-      --text-secondary: #6b6f85;
-      --text-muted: #4a4e69;
-      --text-rate: #8b8fa3;
-      --text-footer: #3a3e52;
-      --accent: #00d4aa;
-      --accent-light: #00f5c8;
-      --accent-bg: rgba(0,212,170,0.06);
-      --accent-bg-strong: rgba(0,212,170,0.15);
-      --accent-border: rgba(0,212,170,0.18);
-      --accent-border-strong: rgba(0,212,170,0.25);
-      --accent-glow: rgba(0,212,170,0.3);
-      --result-bg: rgba(0,212,170,0.04);
-      --result-border: rgba(0,212,170,0.15);
-      --quick-bg: rgba(0,212,170,0.06);
-      --quick-bg-active: rgba(0,212,170,0.15);
-      --quick-desc: #a0e8d8;
-      --swap-border: #1a1a2e;
-      --overlay-bg: rgba(0,0,0,0.7);
-      --calc-overlay-bg: rgba(0,0,0,0.8);
-      --danger-bg: rgba(255,82,82,0.15);
-      --danger-bg-active: rgba(255,82,82,0.3);
-      --danger-color: #ff5252;
-    }
-
-    [data-theme="light"] {
-      --bg-primary: #f5f7fa;
-      --bg-gradient: linear-gradient(160deg, #f5f7fa 0%, #e8ecf1 40%, #dfe6ed 100%);
-      --bg-card: rgba(255,255,255,0.85);
-      --bg-card-border: rgba(0,0,0,0.08);
-      --bg-input: rgba(0,0,0,0.03);
-      --bg-input-border: rgba(0,0,0,0.08);
-      --bg-input-focused: rgba(0,180,150,0.06);
-      --bg-input-focused-border: rgba(0,180,150,0.4);
-      --bg-modal: #ffffff;
-      --bg-modal-border: rgba(0,0,0,0.1);
-      --bg-hover: rgba(0,0,0,0.06);
-      --bg-btn: rgba(0,0,0,0.05);
-      --bg-btn-border: rgba(0,0,0,0.1);
-      --bg-btn-active: rgba(0,0,0,0.1);
-      --bg-rate-info: rgba(0,0,0,0.02);
-      --bg-rate-info-border: rgba(0,0,0,0.06);
-      --bg-calc-display: rgba(0,0,0,0.04);
-      --bg-calc-num: rgba(0,0,0,0.06);
-      --bg-calc-num-active: rgba(0,0,0,0.12);
-      --text-primary: #1a1a2e;
-      --text-secondary: #6b7280;
-      --text-muted: #9ca3af;
-      --text-rate: #4b5563;
-      --text-footer: #9ca3af;
-      --accent: #009d80;
-      --accent-light: #00b894;
-      --accent-bg: rgba(0,180,150,0.08);
-      --accent-bg-strong: rgba(0,180,150,0.18);
-      --accent-border: rgba(0,180,150,0.2);
-      --accent-border-strong: rgba(0,180,150,0.35);
-      --accent-glow: rgba(0,180,150,0.2);
-      --result-bg: rgba(0,180,150,0.06);
-      --result-border: rgba(0,180,150,0.2);
-      --quick-bg: rgba(0,180,150,0.06);
-      --quick-bg-active: rgba(0,180,150,0.15);
-      --quick-desc: #047857;
-      --swap-border: #f5f7fa;
-      --overlay-bg: rgba(0,0,0,0.4);
-      --calc-overlay-bg: rgba(0,0,0,0.5);
-      --danger-bg: rgba(255,82,82,0.1);
-      --danger-bg-active: rgba(255,82,82,0.2);
-      --danger-color: #dc2626;
-    }
-
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     html, body { height: 100%; overflow-x: hidden; }
     body {
       font-family: 'DM Sans', 'Noto Sans TC', sans-serif;
-      background: var(--bg-gradient);
+      background: linear-gradient(160deg, #0f0f1a 0%, #1a1a2e 40%, #16213e 100%);
       min-height: 100vh;
       min-height: 100dvh;
-      color: var(--text-primary);
+      color: #fff;
       padding: env(safe-area-inset-top) 16px env(safe-area-inset-bottom) 16px;
-      transition: background 0.3s, color 0.3s;
     }
     input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
     input[type=number] { -moz-appearance: textfield; }
@@ -134,56 +41,50 @@
       background: linear-gradient(135deg, #00d4aa, #00b4d8);
       display: flex; align-items: center; justify-content: center; font-size: 18px;
     }
-    .header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; flex: 1; }
-    .theme-btn {
-      background: var(--bg-btn); border: 1px solid var(--bg-btn-border);
-      width: 40px; height: 40px; border-radius: 12px; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px; transition: all 0.3s;
-    }
-    .theme-btn:active { background: var(--bg-btn-active); transform: scale(0.92); }
+    .header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
     .status-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
-    .status-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .status-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+    }
     .status-dot.loading { background: #f0a500; animation: pulse 1s infinite; }
     .status-dot.ready { background: #00d4aa; }
-    .status-text { color: var(--text-secondary); font-size: 12px; }
+    .status-text { color: #6b6f85; font-size: 12px; }
     .refresh-btn {
-      background: none; border: none; color: var(--accent); cursor: pointer;
+      background: none; border: none; color: #00d4aa; cursor: pointer;
       font-size: 12px; padding: 2px 8px; border-radius: 6px; font-family: inherit;
     }
-    .refresh-btn:active { background: var(--accent-bg-strong); }
+    .refresh-btn:active { background: rgba(0,212,170,0.15); }
 
     /* Main Card */
     .card {
-      background: var(--bg-card); border: 1px solid var(--bg-card-border);
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
       border-radius: 24px; padding: 24px; animation: fadeIn 0.6s ease 0.1s both;
-      transition: background 0.3s, border-color 0.3s;
     }
-    .section-label { color: var(--text-secondary); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+    .section-label { color: #6b6f85; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
     .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
 
     .currency-btn {
       display: flex; align-items: center; gap: 8px;
-      background: var(--bg-btn); border: 1px solid var(--bg-btn-border);
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
       border-radius: 12px; padding: 8px 14px; cursor: pointer; font-family: inherit;
     }
-    .currency-btn:active { background: var(--bg-btn-active); }
+    .currency-btn:active { background: rgba(255,255,255,0.12); }
     .currency-btn .flag { font-size: 20px; }
-    .currency-btn .code { color: var(--text-primary); font-weight: 600; font-size: 14px; }
-    .currency-btn .arrow { color: var(--text-secondary); font-size: 11px; }
+    .currency-btn .code { color: #fff; font-weight: 600; font-size: 14px; }
+    .currency-btn .arrow { color: #6b6f85; font-size: 11px; }
 
     .input-box {
       border-radius: 16px; padding: 16px 20px; transition: all 0.3s;
-      background: var(--bg-input); border: 1.5px solid var(--bg-input-border);
+      background: rgba(255,255,255,0.04); border: 1.5px solid rgba(255,255,255,0.06);
     }
     .input-box.focused {
-      background: var(--bg-input-focused); border-color: var(--bg-input-focused-border);
+      background: rgba(0,212,170,0.06); border-color: rgba(0,212,170,0.3);
     }
-    .input-label { color: var(--text-secondary); font-size: 11px; margin-bottom: 6px; }
+    .input-label { color: #6b6f85; font-size: 11px; margin-bottom: 6px; }
     .input-row { display: flex; align-items: center; gap: 8px; }
-    .input-symbol { color: var(--text-muted); font-size: 20px; font-weight: 500; }
+    .input-symbol { color: #4a4e69; font-size: 20px; font-weight: 500; }
     .amount-input {
-      background: none; border: none; outline: none; color: var(--text-primary);
+      background: none; border: none; outline: none; color: #fff;
       font-size: 32px; font-weight: 600; width: 100%;
       font-family: 'JetBrains Mono', monospace;
     }
@@ -193,105 +94,79 @@
     .swap-btn {
       width: 44px; height: 44px; border-radius: 50%;
       background: linear-gradient(135deg, #00d4aa, #00b4d8);
-      border: 3px solid var(--swap-border); cursor: pointer;
+      border: 3px solid #1a1a2e; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       font-size: 18px; color: #1a1a2e; font-weight: 700;
-      box-shadow: 0 4px 20px var(--accent-glow);
+      box-shadow: 0 4px 20px rgba(0,212,170,0.3);
       transition: transform 0.3s;
     }
     .swap-btn:active { transform: rotate(180deg) scale(1.1); }
 
     /* Result Box */
     .result-box {
-      background: var(--result-bg); border: 1.5px solid var(--result-border);
+      background: rgba(0,212,170,0.04); border: 1.5px solid rgba(0,212,170,0.15);
       border-radius: 16px; padding: 16px 20px;
     }
-    .result-symbol { color: var(--accent); font-size: 20px; font-weight: 500; }
+    .result-symbol { color: #00d4aa; font-size: 20px; font-weight: 500; }
     .result-value {
-      color: var(--accent); font-size: 32px; font-weight: 600;
+      color: #00d4aa; font-size: 32px; font-weight: 600;
       font-family: 'JetBrains Mono', monospace;
     }
 
     /* Rate Info */
     .rate-info {
-      margin-top: 20px; padding: 14px 18px; background: var(--bg-rate-info);
-      border-radius: 12px; border: 1px solid var(--bg-rate-info-border);
+      margin-top: 20px; padding: 14px 18px; background: rgba(255,255,255,0.02);
+      border-radius: 12px; border: 1px solid rgba(255,255,255,0.04);
       display: flex; justify-content: space-between; align-items: center;
     }
-    .rate-label { color: var(--text-secondary); font-size: 12px; }
-    .rate-value { color: var(--text-rate); font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+    .rate-label { color: #6b6f85; font-size: 12px; }
+    .rate-value { color: #8b8fa3; font-size: 13px; font-family: 'JetBrains Mono', monospace; }
 
     /* Quick Convert */
     .quick-section { margin-top: 20px; animation: fadeIn 0.7s ease 0.2s both; }
-    .quick-title { color: var(--text-secondary); font-size: 12px; letter-spacing: 1px; margin-bottom: 12px; padding-left: 4px; }
+    .quick-title { color: #6b6f85; font-size: 12px; letter-spacing: 1px; margin-bottom: 12px; padding-left: 4px; }
     .quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .quick-card {
-      background: var(--quick-bg); border: 1px solid var(--accent-border);
+      background: rgba(0,212,170,0.06); border: 1px solid rgba(0,212,170,0.18);
       border-radius: 16px; padding: 14px 16px; cursor: pointer;
       text-align: left; font-family: inherit; color: inherit;
       transition: all 0.2s;
     }
-    .quick-card:active { background: var(--quick-bg-active); transform: translateY(-1px); }
+    .quick-card:active { background: rgba(0,212,170,0.15); transform: translateY(-1px); }
     .quick-flags { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
     .quick-flags span.f { font-size: 18px; }
-    .quick-flags span.arr { color: var(--accent); font-size: 13px; font-weight: 600; }
+    .quick-flags span.arr { color: #00d4aa; font-size: 13px; font-weight: 600; }
     .quick-rate {
-      color: var(--accent-light); font-size: 18px; font-weight: 700;
+      color: #00f5c8; font-size: 18px; font-weight: 700;
       font-family: 'JetBrains Mono', monospace;
-      text-shadow: 0 0 12px var(--accent-glow);
+      text-shadow: 0 0 12px rgba(0,212,170,0.3);
     }
-    .quick-desc { color: var(--quick-desc); font-size: 12px; margin-top: 4px; font-weight: 500; }
-
-    /* Conversion History */
-    .history-section { margin-top: 20px; animation: fadeIn 0.8s ease 0.25s both; }
-    .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 0 4px; }
-    .history-title { color: var(--text-secondary); font-size: 12px; letter-spacing: 1px; }
-    .history-clear-btn {
-      background: none; border: none; color: var(--danger-color); cursor: pointer;
-      font-size: 11px; padding: 2px 8px; border-radius: 6px; font-family: inherit;
-    }
-    .history-clear-btn:active { background: var(--danger-bg); }
-    .history-list { display: flex; flex-direction: column; gap: 8px; }
-    .history-item {
-      background: var(--bg-input); border: 1px solid var(--bg-input-border);
-      border-radius: 14px; padding: 12px 16px; cursor: pointer;
-      font-family: inherit; color: inherit; text-align: left; width: 100%;
-      transition: all 0.2s;
-    }
-    .history-item:active { background: var(--bg-hover); }
-    .history-item-top { display: flex; justify-content: space-between; align-items: center; }
-    .history-item-conversion {
-      font-size: 14px; font-weight: 600;
-      font-family: 'JetBrains Mono', monospace; color: var(--text-primary);
-    }
-    .history-item-time { font-size: 11px; color: var(--text-secondary); }
-    .history-item-rate { font-size: 12px; color: var(--accent); margin-top: 4px; }
-    .history-empty { color: var(--text-secondary); font-size: 13px; text-align: center; padding: 16px; }
+    .quick-desc { color: #a0e8d8; font-size: 12px; margin-top: 4px; font-weight: 500; }
 
     /* Footer */
     .footer {
-      color: var(--text-footer); font-size: 11px; margin-top: 32px; margin-bottom: 24px;
+      color: #3a3e52; font-size: 11px; margin-top: 32px; margin-bottom: 24px;
       text-align: center; animation: fadeIn 0.8s ease 0.3s both;
     }
 
     /* Picker Modal */
     .picker-overlay {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      background: var(--overlay-bg); backdrop-filter: blur(10px);
+      background: rgba(0,0,0,0.7); backdrop-filter: blur(10px);
       z-index: 1000; display: flex; align-items: flex-end; justify-content: center;
     }
     .picker-sheet {
-      background: var(--bg-modal); border-radius: 24px 24px 0 0;
-      width: 100%; max-width: 480px; max-height: 70vh; overflow: hidden;
+      background: #1a1a2e; border-radius: 24px 24px 0 0;
+      width: 100%; max-width: 480; max-height: 70vh; overflow: hidden;
       animation: slideUp 0.3s ease;
     }
     .picker-header {
-      padding: 20px 24px 12px; border-bottom: 1px solid var(--bg-modal-border);
+      padding: 20px 24px 12px; border-bottom: 1px solid rgba(255,255,255,0.08);
       display: flex; justify-content: space-between; align-items: center;
     }
-    .picker-header span { color: var(--text-rate); font-size: 14px; letter-spacing: 1px; }
+    .picker-header span { color: #8b8fa3; font-size: 14px; letter-spacing: 1px; }
     .picker-close {
-      background: var(--bg-hover); border: none; color: var(--text-primary);
+      background: rgba(255,255,255,0.1); border: none; color: #fff;
       width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 16px;
     }
     .picker-list { overflow-y: auto; max-height: calc(70vh - 60px); padding: 8px 12px 24px; }
@@ -300,58 +175,57 @@
       padding: 14px 16px; border: none; border-radius: 14px; cursor: pointer;
       background: transparent; font-family: inherit;
     }
-    .picker-item:active { background: var(--bg-hover); }
-    .picker-item.selected { background: var(--accent-bg); }
+    .picker-item:active { background: rgba(255,255,255,0.08); }
+    .picker-item.selected { background: rgba(0,212,170,0.12); }
     .picker-item .flag { font-size: 28px; }
     .picker-item .info { text-align: left; flex: 1; }
-    .picker-item .code { color: var(--text-primary); font-size: 15px; font-weight: 600; }
-    .picker-item .name { color: var(--text-secondary); font-size: 12px; margin-top: 2px; }
+    .picker-item .code { color: #fff; font-size: 15px; font-weight: 600; }
+    .picker-item .name { color: #6b6f85; font-size: 12px; margin-top: 2px; }
     .picker-check {
-      width: 24px; height: 24px; border-radius: 50%; background: var(--accent);
+      width: 24px; height: 24px; border-radius: 50%; background: #00d4aa;
       display: flex; align-items: center; justify-content: center;
-      font-size: 14px; color: #fff; font-weight: 700;
+      font-size: 14px; color: #1a1a2e; font-weight: 700;
     }
 
     .hidden { display: none; }
 
     /* Calculator */
     .calc-btn {
-      background: var(--accent-bg-strong); border: 1px solid var(--accent-border-strong);
+      background: rgba(0,212,170,0.15); border: 1px solid rgba(0,212,170,0.25);
       border-radius: 10px; width: 40px; height: 40px; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      font-size: 18px; color: var(--accent); flex-shrink: 0; transition: all 0.2s;
+      font-size: 18px; color: #00d4aa; flex-shrink: 0; transition: all 0.2s;
     }
-    .calc-btn:active { background: var(--accent-bg-strong); transform: scale(0.95); }
+    .calc-btn:active { background: rgba(0,212,170,0.3); transform: scale(0.95); }
 
     .calc-overlay {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      background: var(--calc-overlay-bg); backdrop-filter: blur(10px);
+      background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
       z-index: 1001; display: flex; align-items: center; justify-content: center;
       padding: 20px;
     }
     .calc-panel {
-      background: var(--bg-modal); border-radius: 24px; width: 100%; max-width: 340px;
+      background: #1a1a2e; border-radius: 24px; width: 100%; max-width: 340px;
       padding: 24px; animation: slideUp 0.25s ease;
-      border: 1px solid var(--bg-modal-border);
-      max-height: 90vh; overflow-y: auto;
+      border: 1px solid rgba(255,255,255,0.08);
     }
     .calc-header {
       display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;
     }
-    .calc-header span { color: var(--text-rate); font-size: 14px; letter-spacing: 1px; }
+    .calc-header span { color: #8b8fa3; font-size: 14px; letter-spacing: 1px; }
     .calc-display {
-      background: var(--bg-calc-display); border: 1px solid var(--bg-input-border);
+      background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.06);
       border-radius: 14px; padding: 16px; margin-bottom: 16px; min-height: 80px;
       display: flex; flex-direction: column; justify-content: flex-end; text-align: right;
     }
     .calc-expr {
-      color: var(--text-secondary); font-size: 14px; font-family: 'JetBrains Mono', monospace;
+      color: #6b6f85; font-size: 14px; font-family: 'JetBrains Mono', monospace;
       min-height: 20px; word-break: break-all;
     }
     .calc-result {
-      color: var(--accent-light); font-size: 28px; font-weight: 700;
+      color: #00f5c8; font-size: 28px; font-weight: 700;
       font-family: 'JetBrains Mono', monospace; margin-top: 4px;
-      text-shadow: 0 0 12px var(--accent-glow);
+      text-shadow: 0 0 12px rgba(0,212,170,0.3);
     }
     .calc-grid {
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
@@ -363,17 +237,22 @@
       transition: all 0.1s;
     }
     .calc-key:active { transform: scale(0.93); }
-    .calc-key.num { background: var(--bg-calc-num); color: var(--text-primary); }
-    .calc-key.num:active { background: var(--bg-calc-num-active); }
-    .calc-key.op { background: var(--accent-bg-strong); color: var(--accent); }
-    .calc-key.op:active { background: var(--accent-bg-strong); }
-    .calc-key.action { background: var(--danger-bg); color: var(--danger-color); }
-    .calc-key.action:active { background: var(--danger-bg-active); }
+    .calc-key.num {
+      background: rgba(255,255,255,0.08); color: #fff;
+    }
+    .calc-key.num:active { background: rgba(255,255,255,0.15); }
+    .calc-key.op {
+      background: rgba(0,212,170,0.15); color: #00d4aa;
+    }
+    .calc-key.op:active { background: rgba(0,212,170,0.3); }
+    .calc-key.action {
+      background: rgba(255,82,82,0.15); color: #ff5252;
+    }
+    .calc-key.action:active { background: rgba(255,82,82,0.3); }
     .calc-key.enter {
       background: linear-gradient(135deg, #00d4aa, #00b4d8); color: #1a1a2e;
     }
     .calc-key.enter:active { opacity: 0.8; }
-
   </style>
 </head>
 <body>
@@ -384,7 +263,6 @@
     <div class="header-row">
       <div class="logo">💱</div>
       <h1>匯率計算機</h1>
-      <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
     </div>
     <div class="status-row">
       <div class="status-dot loading" id="statusDot"></div>
@@ -454,17 +332,6 @@
   <div class="quick-section">
     <div class="quick-title">常用換算</div>
     <div class="quick-grid" id="quickGrid"></div>
-  </div>
-
-  <!-- Conversion History -->
-  <div class="history-section">
-    <div class="history-header">
-      <span class="history-title">轉換紀錄</span>
-      <button class="history-clear-btn hidden" id="convHistoryClearBtn" onclick="clearConvHistory()">清除全部</button>
-    </div>
-    <div class="history-list" id="convHistoryList">
-      <div class="history-empty">尚無轉換紀錄</div>
-    </div>
   </div>
 
   <div class="footer">No Ads • 無廣告匯率計算機 ✨</div>
@@ -559,7 +426,7 @@ const QUICK_PAIRS = [
 let rates = { ...FALLBACK_RATES };
 let fromCurrency = "USD";
 let toCurrency = "TWD";
-let pickerTarget = "from";
+let pickerTarget = "from"; // "from" or "to"
 
 // ========== HELPERS ==========
 function getCurrency(code) {
@@ -581,21 +448,6 @@ function formatNum(str) {
   return num.toLocaleString(undefined, { maximumFractionDigits: 4 });
 }
 
-// ========== THEME ==========
-function initTheme() {
-  const saved = localStorage.getItem('theme') || 'dark';
-  document.documentElement.setAttribute('data-theme', saved);
-  document.getElementById('themeBtn').textContent = saved === 'dark' ? '🌙' : '☀️';
-}
-
-function toggleTheme() {
-  const current = document.documentElement.getAttribute('data-theme');
-  const next = current === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
-  document.getElementById('themeBtn').textContent = next === 'dark' ? '🌙' : '☀️';
-}
-
 // ========== UI UPDATE ==========
 function updateUI() {
   const fc = getCurrency(fromCurrency);
@@ -615,8 +467,6 @@ function updateUI() {
   updateQuickCards();
 }
 
-let convDebounceTimer = null;
-
 function calculate() {
   const amount = document.getElementById('amountInput').value;
   const result = convert(amount, fromCurrency, toCurrency);
@@ -624,14 +474,6 @@ function calculate() {
 
   const oneRate = convert("1", fromCurrency, toCurrency);
   document.getElementById('rateDisplay').textContent = `1 ${fromCurrency} = ${oneRate} ${toCurrency}`;
-
-  // Debounced conversion history
-  clearTimeout(convDebounceTimer);
-  if (amount && parseFloat(amount) > 0) {
-    convDebounceTimer = setTimeout(() => {
-      addConvHistory(fromCurrency, toCurrency, amount, result);
-    }, 1500);
-  }
 }
 
 function updateQuickCards() {
@@ -756,6 +598,7 @@ function calcInput(ch) {
   calcHasResult = false;
   document.getElementById('calcExpr').textContent = calcStr;
 
+  // Try to evaluate in real-time
   try {
     const result = evalCalc(calcStr);
     if (result !== null && !isNaN(result) && isFinite(result)) {
@@ -787,11 +630,13 @@ function calcBackspace() {
 }
 
 function evalCalc(str) {
+  // Replace display symbols with JS operators
   let expr = str
     .replace(/×/g, '*')
     .replace(/÷/g, '/')
     .replace(/−/g, '-')
     .replace(/%/g, '/100');
+  // Safety: only allow numbers and operators
   if (/^[\d\s\+\-\*\/\.\(\)]+$/.test(expr)) {
     return Function('"use strict"; return (' + expr + ')')();
   }
@@ -806,6 +651,7 @@ function formatCalcNum(n) {
 
 function calcConfirm() {
   const display = document.getElementById('calcDisplay').textContent;
+  // Parse the displayed number (remove commas)
   const num = parseFloat(display.replace(/,/g, ''));
   if (!isNaN(num)) {
     document.getElementById('amountInput').value = num;
@@ -814,76 +660,9 @@ function calcConfirm() {
   closeCalc();
 }
 
-// ========== CONVERSION HISTORY ==========
-function getConvHistory() {
-  try {
-    return JSON.parse(localStorage.getItem('convHistory') || '[]');
-  } catch { return []; }
-}
-
-function saveConvHistory(history) {
-  localStorage.setItem('convHistory', JSON.stringify(history));
-}
-
-function addConvHistory(from, to, amount, result) {
-  const history = getConvHistory();
-  // Avoid duplicate: skip if last entry matches
-  if (history.length > 0) {
-    const last = history[0];
-    if (last.from === from && last.to === to && last.amount === amount) return;
-  }
-  const time = new Date().toLocaleString('zh-TW', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-  history.unshift({ from, to, amount, result, time });
-  if (history.length > 10) history.length = 10;
-  saveConvHistory(history);
-  renderConvHistory();
-}
-
-function clearConvHistory() {
-  localStorage.removeItem('convHistory');
-  renderConvHistory();
-}
-
-function renderConvHistory() {
-  const list = document.getElementById('convHistoryList');
-  const clearBtn = document.getElementById('convHistoryClearBtn');
-  const history = getConvHistory();
-
-  if (history.length === 0) {
-    list.innerHTML = '<div class="history-empty">尚無轉換紀錄</div>';
-    clearBtn.classList.add('hidden');
-    return;
-  }
-
-  clearBtn.classList.remove('hidden');
-  list.innerHTML = '';
-  history.forEach(item => {
-    const fc = getCurrency(item.from);
-    const tc = getCurrency(item.to);
-    const btn = document.createElement('button');
-    btn.className = 'history-item';
-    btn.onclick = () => {
-      fromCurrency = item.from;
-      toCurrency = item.to;
-      document.getElementById('amountInput').value = item.amount;
-      updateUI();
-    };
-    btn.innerHTML = `
-      <div class="history-item-top">
-        <span class="history-item-conversion">${fc ? fc.flag : ''} ${formatNum(item.amount)} ${item.from}</span>
-        <span class="history-item-time">${item.time}</span>
-      </div>
-      <div class="history-item-rate">→ ${tc ? tc.flag : ''} ${formatNum(item.result)} ${item.to}</div>
-    `;
-    list.appendChild(btn);
-  });
-}
-
 // ========== INIT ==========
-initTheme();
 updateUI();
 fetchRates();
-renderConvHistory();
 
 // Register Service Worker
 if ('serviceWorker' in navigator) {
