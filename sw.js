@@ -1,4 +1,4 @@
-const CACHE_NAME = 'currency-v1';
+const CACHE_NAME = 'currency-v2';
 const ASSETS = [
   './',
   './index.html',
@@ -28,8 +28,12 @@ self.addEventListener('fetch', e => {
     );
     return;
   }
-  // Cache first for static assets
+  // Network first for static assets, fallback to cache
   e.respondWith(
-    caches.match(e.request).then(cached => cached || fetch(e.request))
+    fetch(e.request).then(res => {
+      const clone = res.clone();
+      caches.open(CACHE_NAME).then(cache => cache.put(e.request, clone));
+      return res;
+    }).catch(() => caches.match(e.request))
   );
 });
