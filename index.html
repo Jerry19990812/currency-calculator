@@ -125,6 +125,33 @@
     .rate-label { color: #6b6f85; font-size: 11px; }
     .rate-value { color: #8b8fa3; font-size: 12px; font-family: 'JetBrains Mono', monospace; }
 
+    /* Rate History */
+    .rate-history {
+      margin-top: 10px; padding: 10px 14px; background: rgba(255,255,255,0.02);
+      border-radius: 10px; border: 1px solid rgba(255,255,255,0.04);
+    }
+    .rate-history-header {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;
+    }
+    .rate-history-title { color: #6b6f85; font-size: 10px; letter-spacing: 0.5px; }
+    .rate-history-clear {
+      background: none; border: none; color: #6b6f85; cursor: pointer;
+      font-size: 10px; padding: 1px 4px; border-radius: 4px; font-family: inherit;
+    }
+    .rate-history-clear:active { background: rgba(255,255,255,0.08); }
+    .rate-history-list { display: flex; flex-direction: column; gap: 4px; }
+    .rate-history-row {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 11px; font-family: 'JetBrains Mono', monospace;
+    }
+    .rate-history-date { color: #6b6f85; }
+    .rate-history-val { color: #8b8fa3; }
+    .rate-history-change { font-size: 10px; font-weight: 600; }
+    .rate-history-change.up { color: #00d4aa; }
+    .rate-history-change.down { color: #ff5252; }
+    .rate-history-change.same { color: #6b6f85; }
+    .rate-history-empty { color: #6b6f85; font-size: 11px; text-align: center; padding: 4px; }
+
     /* Quick Convert */
     .quick-section { margin-top: 14px; flex: 1; animation: fadeIn 0.7s ease 0.2s both; }
     .quick-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 0 4px; }
@@ -366,6 +393,17 @@
       <span class="rate-label">匯率</span>
       <span class="rate-value" id="rateDisplay">---</span>
     </div>
+
+    <!-- Rate History -->
+    <div class="rate-history" id="rateHistorySection">
+      <div class="rate-history-header">
+        <span class="rate-history-title">匯率紀錄</span>
+        <button class="rate-history-clear" onclick="clearRateHistory()">清除</button>
+      </div>
+      <div class="rate-history-list" id="rateHistoryList">
+        <div class="rate-history-empty">尚無紀錄</div>
+      </div>
+    </div>
   </div>
 
   <!-- Quick Convert -->
@@ -528,6 +566,7 @@ function updateUI() {
 
   calculate();
   updateQuickCards();
+  renderRateHistory();
 }
 
 function calculate() {
@@ -652,6 +691,75 @@ function saveEditQuick() {
   closeEditQuick();
 }
 
+// ========== RATE HISTORY ==========
+function getRateHistory() {
+  try { return JSON.parse(localStorage.getItem('rateHistory') || '{}'); }
+  catch { return {}; }
+}
+
+function saveRateToHistory() {
+  const key = `${fromCurrency}_${toCurrency}`;
+  const history = getRateHistory();
+  if (!history[key]) history[key] = [];
+
+  const today = new Date().toLocaleDateString('zh-TW', { month: 'numeric', day: 'numeric' });
+  const oneRate = convert("1", fromCurrency, toCurrency);
+
+  // 同一天不重複記錄
+  if (history[key].length > 0 && history[key][0].date === today) {
+    history[key][0].rate = oneRate;
+  } else {
+    history[key].unshift({ date: today, rate: oneRate });
+  }
+
+  // 最多保留 30 筆
+  if (history[key].length > 30) history[key].length = 30;
+  localStorage.setItem('rateHistory', JSON.stringify(history));
+}
+
+function renderRateHistory() {
+  const key = `${fromCurrency}_${toCurrency}`;
+  const history = getRateHistory();
+  const records = history[key] || [];
+  const list = document.getElementById('rateHistoryList');
+
+  if (records.length === 0) {
+    list.innerHTML = '<div class="rate-history-empty">尚無紀錄</div>';
+    return;
+  }
+
+  // 顯示最近 5 筆
+  const show = records.slice(0, 5);
+  list.innerHTML = '';
+  show.forEach((item, i) => {
+    const row = document.createElement('div');
+    row.className = 'rate-history-row';
+    let changeHtml = '';
+    if (i < show.length - 1) {
+      const prev = parseFloat(show[i + 1].rate);
+      const curr = parseFloat(item.rate);
+      const diff = curr - prev;
+      if (diff > 0) changeHtml = `<span class="rate-history-change up">▲ ${diff.toFixed(3)}</span>`;
+      else if (diff < 0) changeHtml = `<span class="rate-history-change down">▼ ${Math.abs(diff).toFixed(3)}</span>`;
+      else changeHtml = `<span class="rate-history-change same">— 0</span>`;
+    }
+    row.innerHTML = `
+      <span class="rate-history-date">${item.date}</span>
+      <span class="rate-history-val">${item.rate}</span>
+      ${changeHtml}
+    `;
+    list.appendChild(row);
+  });
+}
+
+function clearRateHistory() {
+  const key = `${fromCurrency}_${toCurrency}`;
+  const history = getRateHistory();
+  delete history[key];
+  localStorage.setItem('rateHistory', JSON.stringify(history));
+  renderRateHistory();
+}
+
 // ========== FETCH RATES ==========
 async function fetchRates() {
   const dot = document.getElementById('statusDot');
@@ -669,6 +777,7 @@ async function fetchRates() {
       rates = data.rates;
       const now = new Date().toLocaleString('zh-TW');
       text.textContent = `更新時間：${now}`;
+      saveRateToHistory();
     } else {
       throw new Error('Bad data');
     }
@@ -680,6 +789,7 @@ async function fetchRates() {
   btn.classList.remove('hidden');
   calculate();
   updateQuickCards();
+  renderRateHistory();
 }
 
 // ========== CALCULATOR ==========
