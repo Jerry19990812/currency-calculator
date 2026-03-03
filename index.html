@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="匯率計算機">
+  <meta name="theme-color" content="#00d4aa">
+  <meta name="description" content="無廣告即時匯率計算機">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="icon" type="image/png" href="icon-192.png">
+  <title>匯率計算機</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ===== Theme Variables ===== */
+    :root,
+    [data-theme="dark"] {
+      --bg-primary: #0f0f1a;
+      --bg-gradient: linear-gradient(160deg, #0f0f1a 0%, #1a1a2e 40%, #16213e 100%);
+      --bg-card: rgba(255,255,255,0.03);
+      --bg-card-border: rgba(255,255,255,0.06);
+      --bg-input: rgba(255,255,255,0.04);
+      --bg-input-border: rgba(255,255,255,0.06);
+      --bg-input-focused: rgba(0,212,170,0.06);
+      --bg-input-focused-border: rgba(0,212,170,0.3);
+      --bg-modal: #1a1a2e;
+      --bg-modal-border: rgba(255,255,255,0.08);
+      --bg-hover: rgba(255,255,255,0.08);
+      --bg-btn: rgba(255,255,255,0.06);
+      --bg-btn-border: rgba(255,255,255,0.08);
+      --bg-btn-active: rgba(255,255,255,0.12);
+      --bg-rate-info: rgba(255,255,255,0.02);
+      --bg-rate-info-border: rgba(255,255,255,0.04);
+      --bg-calc-display: rgba(0,0,0,0.3);
+      --bg-calc-num: rgba(255,255,255,0.08);
+      --bg-calc-num-active: rgba(255,255,255,0.15);
+      --text-primary: #fff;
+      --text-secondary: #6b6f85;
+      --text-muted: #4a4e69;
+      --text-rate: #8b8fa3;
+      --text-footer: #3a3e52;
+      --accent: #00d4aa;
+      --accent-light: #00f5c8;
+      --accent-bg: rgba(0,212,170,0.06);
+      --accent-bg-strong: rgba(0,212,170,0.15);
+      --accent-border: rgba(0,212,170,0.18);
+      --accent-border-strong: rgba(0,212,170,0.25);
+      --accent-glow: rgba(0,212,170,0.3);
+      --result-bg: rgba(0,212,170,0.04);
+      --result-border: rgba(0,212,170,0.15);
+      --quick-bg: rgba(0,212,170,0.06);
+      --quick-bg-active: rgba(0,212,170,0.15);
+      --quick-desc: #a0e8d8;
+      --swap-border: #1a1a2e;
+      --overlay-bg: rgba(0,0,0,0.7);
+      --calc-overlay-bg: rgba(0,0,0,0.8);
+      --danger-bg: rgba(255,82,82,0.15);
+      --danger-bg-active: rgba(255,82,82,0.3);
+      --danger-color: #ff5252;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f5f7fa;
+      --bg-gradient: linear-gradient(160deg, #f5f7fa 0%, #e8ecf1 40%, #dfe6ed 100%);
+      --bg-card: rgba(255,255,255,0.85);
+      --bg-card-border: rgba(0,0,0,0.08);
+      --bg-input: rgba(0,0,0,0.03);
+      --bg-input-border: rgba(0,0,0,0.08);
+      --bg-input-focused: rgba(0,180,150,0.06);
+      --bg-input-focused-border: rgba(0,180,150,0.4);
+      --bg-modal: #ffffff;
+      --bg-modal-border: rgba(0,0,0,0.1);
+      --bg-hover: rgba(0,0,0,0.06);
+      --bg-btn: rgba(0,0,0,0.05);
+      --bg-btn-border: rgba(0,0,0,0.1);
+      --bg-btn-active: rgba(0,0,0,0.1);
+      --bg-rate-info: rgba(0,0,0,0.02);
+      --bg-rate-info-border: rgba(0,0,0,0.06);
+      --bg-calc-display: rgba(0,0,0,0.04);
+      --bg-calc-num: rgba(0,0,0,0.06);
+      --bg-calc-num-active: rgba(0,0,0,0.12);
+      --text-primary: #1a1a2e;
+      --text-secondary: #6b7280;
+      --text-muted: #9ca3af;
+      --text-rate: #4b5563;
+      --text-footer: #9ca3af;
+      --accent: #009d80;
+      --accent-light: #00b894;
+      --accent-bg: rgba(0,180,150,0.08);
+      --accent-bg-strong: rgba(0,180,150,0.18);
+      --accent-border: rgba(0,180,150,0.2);
+      --accent-border-strong: rgba(0,180,150,0.35);
+      --accent-glow: rgba(0,180,150,0.2);
+      --result-bg: rgba(0,180,150,0.06);
+      --result-border: rgba(0,180,150,0.2);
+      --quick-bg: rgba(0,180,150,0.06);
+      --quick-bg-active: rgba(0,180,150,0.15);
+      --quick-desc: #047857;
+      --swap-border: #f5f7fa;
+      --overlay-bg: rgba(0,0,0,0.4);
+      --calc-overlay-bg: rgba(0,0,0,0.5);
+      --danger-bg: rgba(255,82,82,0.1);
+      --danger-bg-active: rgba(255,82,82,0.2);
+      --danger-color: #dc2626;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html, body { height: 100%; overflow-x: hidden; }
+    body {
+      font-family: 'DM Sans', 'Noto Sans TC', sans-serif;
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      min-height: 100dvh;
+      color: var(--text-primary);
+      padding: env(safe-area-inset-top) 16px env(safe-area-inset-bottom) 16px;
+      transition: background 0.3s, color 0.3s;
+    }
+    input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type=number] { -moz-appearance: textfield; }
+
+    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+    .app { max-width: 440px; margin: 0 auto; }
+
+    /* Header */
+    .header { padding-top: 48px; margin-bottom: 32px; animation: fadeIn 0.5s ease; }
+    .header-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+    .logo {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, #00d4aa, #00b4d8);
+      display: flex; align-items: center; justify-content: center; font-size: 18px;
+    }
+    .header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; flex: 1; }
+    .theme-btn {
+      background: var(--bg-btn); border: 1px solid var(--bg-btn-border);
+      width: 40px; height: 40px; border-radius: 12px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; transition: all 0.3s;
+    }
+    .theme-btn:active { background: var(--bg-btn-active); transform: scale(0.92); }
+    .status-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .status-dot.loading { background: #f0a500; animation: pulse 1s infinite; }
+    .status-dot.ready { background: #00d4aa; }
+    .status-text { color: var(--text-secondary); font-size: 12px; }
+    .refresh-btn {
+      background: none; border: none; color: var(--accent); cursor: pointer;
+      font-size: 12px; padding: 2px 8px; border-radius: 6px; font-family: inherit;
+    }
+    .refresh-btn:active { background: var(--accent-bg-strong); }
+
+    /* Main Card */
+    .card {
+      background: var(--bg-card); border: 1px solid var(--bg-card-border);
+      border-radius: 24px; padding: 24px; animation: fadeIn 0.6s ease 0.1s both;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .section-label { color: var(--text-secondary); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+
+    .currency-btn {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--bg-btn); border: 1px solid var(--bg-btn-border);
+      border-radius: 12px; padding: 8px 14px; cursor: pointer; font-family: inherit;
+    }
+    .currency-btn:active { background: var(--bg-btn-active); }
+    .currency-btn .flag { font-size: 20px; }
+    .currency-btn .code { color: var(--text-primary); font-weight: 600; font-size: 14px; }
+    .currency-btn .arrow { color: var(--text-secondary); font-size: 11px; }
+
+    .input-box {
+      border-radius: 16px; padding: 16px 20px; transition: all 0.3s;
+      background: var(--bg-input); border: 1.5px solid var(--bg-input-border);
+    }
+    .input-box.focused {
+      background: var(--bg-input-focused); border-color: var(--bg-input-focused-border);
+    }
+    .input-label { color: var(--text-secondary); font-size: 11px; margin-bottom: 6px; }
+    .input-row { display: flex; align-items: center; gap: 8px; }
+    .input-symbol { color: var(--text-muted); font-size: 20px; font-weight: 500; }
+    .amount-input {
+      background: none; border: none; outline: none; color: var(--text-primary);
+      font-size: 32px; font-weight: 600; width: 100%;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Swap Button */
+    .swap-wrap { display: flex; justify-content: center; margin: 4px 0; position: relative; z-index: 2; }
+    .swap-btn {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, #00d4aa, #00b4d8);
+      border: 3px solid var(--swap-border); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; color: #1a1a2e; font-weight: 700;
+      box-shadow: 0 4px 20px var(--accent-glow);
+      transition: transform 0.3s;
+    }
+    .swap-btn:active { transform: rotate(180deg) scale(1.1); }
+
+    /* Result Box */
+    .result-box {
+      background: var(--result-bg); border: 1.5px solid var(--result-border);
+      border-radius: 16px; padding: 16px 20px;
+    }
+    .result-symbol { color: var(--accent); font-size: 20px; font-weight: 500; }
+    .result-value {
+      color: var(--accent); font-size: 32px; font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Rate Info */
+    .rate-info {
+      margin-top: 20px; padding: 14px 18px; background: var(--bg-rate-info);
+      border-radius: 12px; border: 1px solid var(--bg-rate-info-border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .rate-label { color: var(--text-secondary); font-size: 12px; }
+    .rate-value { color: var(--text-rate); font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+
+    /* Quick Convert */
+    .quick-section { margin-top: 20px; animation: fadeIn 0.7s ease 0.2s both; }
+    .quick-title { color: var(--text-secondary); font-size: 12px; letter-spacing: 1px; margin-bottom: 12px; padding-left: 4px; }
+    .quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .quick-card {
+      background: var(--quick-bg); border: 1px solid var(--accent-border);
+      border-radius: 16px; padding: 14px 16px; cursor: pointer;
+      text-align: left; font-family: inherit; color: inherit;
+      transition: all 0.2s;
+    }
+    .quick-card:active { background: var(--quick-bg-active); transform: translateY(-1px); }
+    .quick-flags { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+    .quick-flags span.f { font-size: 18px; }
+    .quick-flags span.arr { color: var(--accent); font-size: 13px; font-weight: 600; }
+    .quick-rate {
+      color: var(--accent-light); font-size: 18px; font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      text-shadow: 0 0 12px var(--accent-glow);
+    }
+    .quick-desc { color: var(--quick-desc); font-size: 12px; margin-top: 4px; font-weight: 500; }
+
+    /* Conversion History */
+    .history-section { margin-top: 20px; animation: fadeIn 0.8s ease 0.25s both; }
+    .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 0 4px; }
+    .history-title { color: var(--text-secondary); font-size: 12px; letter-spacing: 1px; }
+    .history-clear-btn {
+      background: none; border: none; color: var(--danger-color); cursor: pointer;
+      font-size: 11px; padding: 2px 8px; border-radius: 6px; font-family: inherit;
+    }
+    .history-clear-btn:active { background: var(--danger-bg); }
+    .history-list { display: flex; flex-direction: column; gap: 8px; }
+    .history-item {
+      background: var(--bg-input); border: 1px solid var(--bg-input-border);
+      border-radius: 14px; padding: 12px 16px; cursor: pointer;
+      font-family: inherit; color: inherit; text-align: left; width: 100%;
+      transition: all 0.2s;
+    }
+    .history-item:active { background: var(--bg-hover); }
+    .history-item-top { display: flex; justify-content: space-between; align-items: center; }
+    .history-item-conversion {
+      font-size: 14px; font-weight: 600;
+      font-family: 'JetBrains Mono', monospace; color: var(--text-primary);
+    }
+    .history-item-time { font-size: 11px; color: var(--text-secondary); }
+    .history-item-rate { font-size: 12px; color: var(--accent); margin-top: 4px; }
+    .history-empty { color: var(--text-secondary); font-size: 13px; text-align: center; padding: 16px; }
+
+    /* Footer */
+    .footer {
+      color: var(--text-footer); font-size: 11px; margin-top: 32px; margin-bottom: 24px;
+      text-align: center; animation: fadeIn 0.8s ease 0.3s both;
+    }
+
+    /* Picker Modal */
+    .picker-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--overlay-bg); backdrop-filter: blur(10px);
+      z-index: 1000; display: flex; align-items: flex-end; justify-content: center;
+    }
+    .picker-sheet {
+      background: var(--bg-modal); border-radius: 24px 24px 0 0;
+      width: 100%; max-width: 480px; max-height: 70vh; overflow: hidden;
+      animation: slideUp 0.3s ease;
+    }
+    .picker-header {
+      padding: 20px 24px 12px; border-bottom: 1px solid var(--bg-modal-border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .picker-header span { color: var(--text-rate); font-size: 14px; letter-spacing: 1px; }
+    .picker-close {
+      background: var(--bg-hover); border: none; color: var(--text-primary);
+      width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 16px;
+    }
+    .picker-list { overflow-y: auto; max-height: calc(70vh - 60px); padding: 8px 12px 24px; }
+    .picker-item {
+      display: flex; align-items: center; gap: 14px; width: 100%;
+      padding: 14px 16px; border: none; border-radius: 14px; cursor: pointer;
+      background: transparent; font-family: inherit;
+    }
+    .picker-item:active { background: var(--bg-hover); }
+    .picker-item.selected { background: var(--accent-bg); }
+    .picker-item .flag { font-size: 28px; }
+    .picker-item .info { text-align: left; flex: 1; }
+    .picker-item .code { color: var(--text-primary); font-size: 15px; font-weight: 600; }
+    .picker-item .name { color: var(--text-secondary); font-size: 12px; margin-top: 2px; }
+    .picker-check {
+      width: 24px; height: 24px; border-radius: 50%; background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; color: #fff; font-weight: 700;
+    }
+
+    .hidden { display: none; }
+
+    /* Calculator */
+    .calc-btn {
+      background: var(--accent-bg-strong); border: 1px solid var(--accent-border-strong);
+      border-radius: 10px; width: 40px; height: 40px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; color: var(--accent); flex-shrink: 0; transition: all 0.2s;
+    }
+    .calc-btn:active { background: var(--accent-bg-strong); transform: scale(0.95); }
+
+    .calc-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--calc-overlay-bg); backdrop-filter: blur(10px);
+      z-index: 1001; display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    .calc-panel {
+      background: var(--bg-modal); border-radius: 24px; width: 100%; max-width: 340px;
+      padding: 24px; animation: slideUp 0.25s ease;
+      border: 1px solid var(--bg-modal-border);
+      max-height: 90vh; overflow-y: auto;
+    }
+    .calc-header {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;
+    }
+    .calc-header span { color: var(--text-rate); font-size: 14px; letter-spacing: 1px; }
+    .calc-display {
+      background: var(--bg-calc-display); border: 1px solid var(--bg-input-border);
+      border-radius: 14px; padding: 16px; margin-bottom: 16px; min-height: 80px;
+      display: flex; flex-direction: column; justify-content: flex-end; text-align: right;
+    }
+    .calc-expr {
+      color: var(--text-secondary); font-size: 14px; font-family: 'JetBrains Mono', monospace;
+      min-height: 20px; word-break: break-all;
+    }
+    .calc-result {
+      color: var(--accent-light); font-size: 28px; font-weight: 700;
+      font-family: 'JetBrains Mono', monospace; margin-top: 4px;
+      text-shadow: 0 0 12px var(--accent-glow);
+    }
+    .calc-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+    }
+    .calc-key {
+      height: 52px; border-radius: 12px; border: none; cursor: pointer;
+      font-size: 20px; font-family: 'DM Sans', sans-serif; font-weight: 600;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.1s;
+    }
+    .calc-key:active { transform: scale(0.93); }
+    .calc-key.num { background: var(--bg-calc-num); color: var(--text-primary); }
+    .calc-key.num:active { background: var(--bg-calc-num-active); }
+    .calc-key.op { background: var(--accent-bg-strong); color: var(--accent); }
+    .calc-key.op:active { background: var(--accent-bg-strong); }
+    .calc-key.action { background: var(--danger-bg); color: var(--danger-color); }
+    .calc-key.action:active { background: var(--danger-bg-active); }
+    .calc-key.enter {
+      background: linear-gradient(135deg, #00d4aa, #00b4d8); color: #1a1a2e;
+    }
+    .calc-key.enter:active { opacity: 0.8; }
+
+    /* Calculator History */
+    .calc-history-section { margin-top: 16px; }
+    .calc-history-header {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;
+    }
+    .calc-history-title { color: var(--text-secondary); font-size: 11px; letter-spacing: 1px; }
+    .calc-history-clear {
+      background: none; border: none; color: var(--danger-color); cursor: pointer;
+      font-size: 11px; padding: 2px 6px; border-radius: 4px; font-family: inherit;
+    }
+    .calc-history-clear:active { background: var(--danger-bg); }
+    .calc-history-list { display: flex; flex-direction: column; gap: 4px; max-height: 150px; overflow-y: auto; }
+    .calc-history-item {
+      background: var(--bg-input); border: 1px solid var(--bg-input-border);
+      border-radius: 10px; padding: 8px 12px; cursor: pointer;
+      font-family: inherit; color: inherit; text-align: left; width: 100%;
+      transition: all 0.15s; display: flex; justify-content: space-between; align-items: center;
+    }
+    .calc-history-item:active { background: var(--bg-hover); }
+    .calc-history-item .expr { color: var(--text-secondary); font-size: 12px; font-family: 'JetBrains Mono', monospace; }
+    .calc-history-item .result { color: var(--accent); font-size: 14px; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+    .calc-history-empty { color: var(--text-secondary); font-size: 12px; text-align: center; padding: 8px; }
+  </style>
+</head>
+<body>
+
+<div class="app" id="app">
+  <!-- Header -->
+  <div class="header">
+    <div class="header-row">
+      <div class="logo">💱</div>
+      <h1>匯率計算機</h1>
+      <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
+    </div>
+    <div class="status-row">
+      <div class="status-dot loading" id="statusDot"></div>
+      <span class="status-text" id="statusText">正在取得最新匯率...</span>
+      <button class="refresh-btn hidden" id="refreshBtn" onclick="fetchRates()">重新整理</button>
+    </div>
+  </div>
+
+  <!-- Main Card -->
+  <div class="card">
+    <!-- From -->
+    <div>
+      <div class="section-header">
+        <span class="section-label">從</span>
+        <button class="currency-btn" onclick="openPicker('from')">
+          <span class="flag" id="fromFlag">🇺🇸</span>
+          <span class="code" id="fromCode">USD</span>
+          <span class="arrow">▼</span>
+        </button>
+      </div>
+      <div class="input-box" id="inputBox">
+        <div class="input-label" id="fromName">美元</div>
+        <div class="input-row">
+          <span class="input-symbol" id="fromSymbol">$</span>
+          <input type="number" class="amount-input" id="amountInput" value="1"
+            inputmode="decimal"
+            onfocus="document.getElementById('inputBox').classList.add('focused')"
+            onblur="document.getElementById('inputBox').classList.remove('focused')"
+            oninput="calculate()">
+          <button class="calc-btn" onclick="openCalc()" title="計算機">🧮</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Swap -->
+    <div class="swap-wrap">
+      <button class="swap-btn" onclick="swapCurrencies()">⇅</button>
+    </div>
+
+    <!-- To -->
+    <div>
+      <div class="section-header">
+        <span class="section-label">至</span>
+        <button class="currency-btn" onclick="openPicker('to')">
+          <span class="flag" id="toFlag">🇹🇼</span>
+          <span class="code" id="toCode">TWD</span>
+          <span class="arrow">▼</span>
+        </button>
+      </div>
+      <div class="result-box">
+        <div class="input-label" id="toName">新台幣</div>
+        <div class="input-row">
+          <span class="result-symbol" id="toSymbol">NT$</span>
+          <span class="result-value" id="resultValue">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rate -->
+    <div class="rate-info">
+      <span class="rate-label">匯率</span>
+      <span class="rate-value" id="rateDisplay">---</span>
+    </div>
+  </div>
+
+  <!-- Quick Convert -->
+  <div class="quick-section">
+    <div class="quick-title">常用換算</div>
+    <div class="quick-grid" id="quickGrid"></div>
+  </div>
+
+  <!-- Conversion History -->
+  <div class="history-section">
+    <div class="history-header">
+      <span class="history-title">轉換紀錄</span>
+      <button class="history-clear-btn hidden" id="convHistoryClearBtn" onclick="clearConvHistory()">清除全部</button>
+    </div>
+    <div class="history-list" id="convHistoryList">
+      <div class="history-empty">尚無轉換紀錄</div>
+    </div>
+  </div>
+
+  <div class="footer">No Ads • 無廣告匯率計算機 ✨</div>
+</div>
+
+<!-- Calculator Modal -->
+<div class="calc-overlay hidden" id="calcOverlay" onclick="closeCalc()">
+  <div class="calc-panel" onclick="event.stopPropagation()">
+    <div class="calc-header">
+      <span>計算機</span>
+      <button class="picker-close" onclick="closeCalc()">✕</button>
+    </div>
+    <div class="calc-display">
+      <div class="calc-expr" id="calcExpr"></div>
+      <div class="calc-result" id="calcDisplay">0</div>
+    </div>
+    <div class="calc-grid">
+      <button class="calc-key action" onclick="calcClear()">C</button>
+      <button class="calc-key action" onclick="calcBackspace()">⌫</button>
+      <button class="calc-key op" onclick="calcInput('%')">%</button>
+      <button class="calc-key op" onclick="calcInput('÷')">÷</button>
+
+      <button class="calc-key num" onclick="calcInput('7')">7</button>
+      <button class="calc-key num" onclick="calcInput('8')">8</button>
+      <button class="calc-key num" onclick="calcInput('9')">9</button>
+      <button class="calc-key op" onclick="calcInput('×')">×</button>
+
+      <button class="calc-key num" onclick="calcInput('4')">4</button>
+      <button class="calc-key num" onclick="calcInput('5')">5</button>
+      <button class="calc-key num" onclick="calcInput('6')">6</button>
+      <button class="calc-key op" onclick="calcInput('-')">−</button>
+
+      <button class="calc-key num" onclick="calcInput('1')">1</button>
+      <button class="calc-key num" onclick="calcInput('2')">2</button>
+      <button class="calc-key num" onclick="calcInput('3')">3</button>
+      <button class="calc-key op" onclick="calcInput('+')">+</button>
+
+      <button class="calc-key num" onclick="calcInput('00')">00</button>
+      <button class="calc-key num" onclick="calcInput('0')">0</button>
+      <button class="calc-key num" onclick="calcInput('.')">.</button>
+      <button class="calc-key enter" onclick="calcConfirm()">✓</button>
+    </div>
+    <!-- Calculator History -->
+    <div class="calc-history-section">
+      <div class="calc-history-header">
+        <span class="calc-history-title">計算歷史</span>
+        <button class="calc-history-clear hidden" id="calcHistoryClearBtn" onclick="clearCalcHistory()">清除</button>
+      </div>
+      <div class="calc-history-list" id="calcHistoryList">
+        <div class="calc-history-empty">尚無計算紀錄</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Picker Modal -->
+<div class="picker-overlay hidden" id="pickerOverlay" onclick="closePicker()">
+  <div class="picker-sheet" onclick="event.stopPropagation()">
+    <div class="picker-header">
+      <span>選擇貨幣</span>
+      <button class="picker-close" onclick="closePicker()">✕</button>
+    </div>
+    <div class="picker-list" id="pickerList"></div>
+  </div>
+</div>
+
+<script>
+// ========== DATA ==========
+const CURRENCIES = [
+  { code: "TWD", name: "新台幣", flag: "🇹🇼", symbol: "NT$" },
+  { code: "USD", name: "美元", flag: "🇺🇸", symbol: "$" },
+  { code: "JPY", name: "日圓", flag: "🇯🇵", symbol: "¥" },
+  { code: "EUR", name: "歐元", flag: "🇪🇺", symbol: "€" },
+  { code: "CNY", name: "人民幣", flag: "🇨🇳", symbol: "¥" },
+  { code: "KRW", name: "韓元", flag: "🇰🇷", symbol: "₩" },
+  { code: "GBP", name: "英鎊", flag: "🇬🇧", symbol: "£" },
+  { code: "HKD", name: "港幣", flag: "🇭🇰", symbol: "HK$" },
+  { code: "THB", name: "泰銖", flag: "🇹🇭", symbol: "฿" },
+  { code: "SGD", name: "新加坡幣", flag: "🇸🇬", symbol: "S$" },
+  { code: "AUD", name: "澳幣", flag: "🇦🇺", symbol: "A$" },
+  { code: "CAD", name: "加幣", flag: "🇨🇦", symbol: "C$" },
+  { code: "CHF", name: "瑞士法郎", flag: "🇨🇭", symbol: "Fr" },
+  { code: "VND", name: "越南盾", flag: "🇻🇳", symbol: "₫" },
+  { code: "MYR", name: "馬來幣", flag: "🇲🇾", symbol: "RM" },
+  { code: "PHP", name: "菲律賓披索", flag: "🇵🇭", symbol: "₱" },
+];
+
+const FALLBACK_RATES = {
+  USD:1, TWD:31.48, JPY:156.4, EUR:0.852, CNY:6.98, KRW:1385,
+  GBP:0.738, HKD:7.78, THB:33.8, SGD:1.32, AUD:1.49, CAD:1.38,
+  CHF:0.87, VND:25550, MYR:4.36, PHP:56.8
+};
+
+const QUICK_PAIRS = [
+  { from: "USD", to: "TWD" },
+  { from: "JPY", to: "TWD" },
+  { from: "EUR", to: "TWD" },
+  { from: "CNY", to: "TWD" },
+];
+
+// ========== STATE ==========
+let rates = { ...FALLBACK_RATES };
+let fromCurrency = "USD";
+let toCurrency = "TWD";
+let pickerTarget = "from";
+
+// ========== HELPERS ==========
+function getCurrency(code) {
+  return CURRENCIES.find(c => c.code === code);
+}
+
+function convert(val, from, to) {
+  if (!val || isNaN(val)) return "0";
+  const inUSD = parseFloat(val) / (rates[from] || 1);
+  const result = inUSD * (rates[to] || 1);
+  if (to === "VND" || to === "KRW") return result.toFixed(0);
+  if (to === "JPY") return result.toFixed(1);
+  return result.toFixed(2);
+}
+
+function formatNum(str) {
+  const num = parseFloat(str);
+  if (isNaN(num)) return "0";
+  return num.toLocaleString(undefined, { maximumFractionDigits: 4 });
+}
+
+// ========== THEME ==========
+function initTheme() {
+  const saved = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+  document.getElementById('themeBtn').textContent = saved === 'dark' ? '🌙' : '☀️';
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  document.getElementById('themeBtn').textContent = next === 'dark' ? '🌙' : '☀️';
+}
+
+// ========== UI UPDATE ==========
+function updateUI() {
+  const fc = getCurrency(fromCurrency);
+  const tc = getCurrency(toCurrency);
+
+  document.getElementById('fromFlag').textContent = fc.flag;
+  document.getElementById('fromCode').textContent = fc.code;
+  document.getElementById('fromName').textContent = fc.name;
+  document.getElementById('fromSymbol').textContent = fc.symbol;
+
+  document.getElementById('toFlag').textContent = tc.flag;
+  document.getElementById('toCode').textContent = tc.code;
+  document.getElementById('toName').textContent = tc.name;
+  document.getElementById('toSymbol').textContent = tc.symbol;
+
+  calculate();
+  updateQuickCards();
+}
+
+let convDebounceTimer = null;
+
+function calculate() {
+  const amount = document.getElementById('amountInput').value;
+  const result = convert(amount, fromCurrency, toCurrency);
+  document.getElementById('resultValue').textContent = formatNum(result);
+
+  const oneRate = convert("1", fromCurrency, toCurrency);
+  document.getElementById('rateDisplay').textContent = `1 ${fromCurrency} = ${oneRate} ${toCurrency}`;
+
+  // Debounced conversion history
+  clearTimeout(convDebounceTimer);
+  if (amount && parseFloat(amount) > 0) {
+    convDebounceTimer = setTimeout(() => {
+      addConvHistory(fromCurrency, toCurrency, amount, result);
+    }, 1500);
+  }
+}
+
+function updateQuickCards() {
+  const grid = document.getElementById('quickGrid');
+  grid.innerHTML = '';
+  QUICK_PAIRS.forEach(({ from, to }) => {
+    const fc = getCurrency(from);
+    const tc = getCurrency(to);
+    const r = convert("1", from, to);
+    const card = document.createElement('button');
+    card.className = 'quick-card';
+    card.onclick = () => {
+      fromCurrency = from;
+      toCurrency = to;
+      document.getElementById('amountInput').value = '1';
+      updateUI();
+    };
+    card.innerHTML = `
+      <div class="quick-flags">
+        <span class="f">${fc.flag}</span>
+        <span class="arr">→</span>
+        <span class="f">${tc.flag}</span>
+      </div>
+      <div class="quick-rate">${formatNum(r)}</div>
+      <div class="quick-desc">1 ${from} = ${r} ${to}</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ========== ACTIONS ==========
+function swapCurrencies() {
+  [fromCurrency, toCurrency] = [toCurrency, fromCurrency];
+  updateUI();
+}
+
+function openPicker(target) {
+  pickerTarget = target;
+  const selected = target === 'from' ? fromCurrency : toCurrency;
+  const list = document.getElementById('pickerList');
+  list.innerHTML = '';
+
+  CURRENCIES.forEach(c => {
+    const item = document.createElement('button');
+    item.className = 'picker-item' + (c.code === selected ? ' selected' : '');
+    item.onclick = () => {
+      if (pickerTarget === 'from') fromCurrency = c.code;
+      else toCurrency = c.code;
+      closePicker();
+      updateUI();
+    };
+    item.innerHTML = `
+      <span class="flag">${c.flag}</span>
+      <div class="info">
+        <div class="code">${c.code}</div>
+        <div class="name">${c.name}</div>
+      </div>
+      ${c.code === selected ? '<div class="picker-check">✓</div>' : ''}
+    `;
+    list.appendChild(item);
+  });
+
+  document.getElementById('pickerOverlay').classList.remove('hidden');
+}
+
+function closePicker() {
+  document.getElementById('pickerOverlay').classList.add('hidden');
+}
+
+// ========== FETCH RATES ==========
+async function fetchRates() {
+  const dot = document.getElementById('statusDot');
+  const text = document.getElementById('statusText');
+  const btn = document.getElementById('refreshBtn');
+
+  dot.className = 'status-dot loading';
+  text.textContent = '正在取得最新匯率...';
+  btn.classList.add('hidden');
+
+  try {
+    const res = await fetch('https://open.er-api.com/v6/latest/USD');
+    const data = await res.json();
+    if (data && data.rates) {
+      rates = data.rates;
+      const now = new Date().toLocaleString('zh-TW');
+      text.textContent = `更新時間：${now}`;
+    } else {
+      throw new Error('Bad data');
+    }
+  } catch (e) {
+    text.textContent = '使用離線匯率（無法連線）';
+  }
+
+  dot.className = 'status-dot ready';
+  btn.classList.remove('hidden');
+  calculate();
+  updateQuickCards();
+}
+
+// ========== CALCULATOR ==========
+let calcStr = '';
+let calcHasResult = false;
+
+function openCalc() {
+  calcStr = '';
+  calcHasResult = false;
+  document.getElementById('calcExpr').textContent = '';
+  document.getElementById('calcDisplay').textContent = '0';
+  document.getElementById('calcOverlay').classList.remove('hidden');
+  renderCalcHistory();
+}
+
+function closeCalc() {
+  document.getElementById('calcOverlay').classList.add('hidden');
+}
+
+function calcInput(ch) {
+  if (calcHasResult && '0123456789.'.includes(ch)) {
+    calcStr = '';
+    calcHasResult = false;
+  }
+  calcStr += ch;
+  calcHasResult = false;
+  document.getElementById('calcExpr').textContent = calcStr;
+
+  try {
+    const result = evalCalc(calcStr);
+    if (result !== null && !isNaN(result) && isFinite(result)) {
+      document.getElementById('calcDisplay').textContent = formatCalcNum(result);
+    }
+  } catch(e) {}
+}
+
+function calcClear() {
+  calcStr = '';
+  calcHasResult = false;
+  document.getElementById('calcExpr').textContent = '';
+  document.getElementById('calcDisplay').textContent = '0';
+}
+
+function calcBackspace() {
+  calcStr = calcStr.slice(0, -1);
+  document.getElementById('calcExpr').textContent = calcStr;
+  if (!calcStr) {
+    document.getElementById('calcDisplay').textContent = '0';
+    return;
+  }
+  try {
+    const result = evalCalc(calcStr);
+    if (result !== null && !isNaN(result) && isFinite(result)) {
+      document.getElementById('calcDisplay').textContent = formatCalcNum(result);
+    }
+  } catch(e) {}
+}
+
+function evalCalc(str) {
+  let expr = str
+    .replace(/×/g, '*')
+    .replace(/÷/g, '/')
+    .replace(/−/g, '-')
+    .replace(/%/g, '/100');
+  if (/^[\d\s\+\-\*\/\.\(\)]+$/.test(expr)) {
+    return Function('"use strict"; return (' + expr + ')')();
+  }
+  return null;
+}
+
+function formatCalcNum(n) {
+  if (Number.isInteger(n) && Math.abs(n) < 1e15) return n.toLocaleString();
+  const s = parseFloat(n.toPrecision(10));
+  return s.toLocaleString(undefined, { maximumFractionDigits: 6 });
+}
+
+function calcConfirm() {
+  const display = document.getElementById('calcDisplay').textContent;
+  const num = parseFloat(display.replace(/,/g, ''));
+  if (!isNaN(num)) {
+    // Save to calc history
+    if (calcStr) {
+      addCalcHistory(calcStr, display);
+    }
+    document.getElementById('amountInput').value = num;
+    calculate();
+  }
+  closeCalc();
+}
+
+// ========== CALCULATOR HISTORY ==========
+function getCalcHistory() {
+  try {
+    return JSON.parse(localStorage.getItem('calcHistory') || '[]');
+  } catch { return []; }
+}
+
+function saveCalcHistory(history) {
+  localStorage.setItem('calcHistory', JSON.stringify(history));
+}
+
+function addCalcHistory(expr, result) {
+  const history = getCalcHistory();
+  history.unshift({ expr, result });
+  if (history.length > 10) history.length = 10;
+  saveCalcHistory(history);
+  renderCalcHistory();
+}
+
+function clearCalcHistory() {
+  localStorage.removeItem('calcHistory');
+  renderCalcHistory();
+}
+
+function renderCalcHistory() {
+  const list = document.getElementById('calcHistoryList');
+  const clearBtn = document.getElementById('calcHistoryClearBtn');
+  const history = getCalcHistory();
+
+  if (history.length === 0) {
+    list.innerHTML = '<div class="calc-history-empty">尚無計算紀錄</div>';
+    clearBtn.classList.add('hidden');
+    return;
+  }
+
+  clearBtn.classList.remove('hidden');
+  list.innerHTML = '';
+  history.forEach((item, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'calc-history-item';
+    btn.onclick = () => {
+      const num = parseFloat(item.result.replace(/,/g, ''));
+      if (!isNaN(num)) {
+        document.getElementById('amountInput').value = num;
+        calculate();
+      }
+      closeCalc();
+    };
+    btn.innerHTML = `
+      <span class="expr">${item.expr}</span>
+      <span class="result">= ${item.result}</span>
+    `;
+    list.appendChild(btn);
+  });
+}
+
+// ========== CONVERSION HISTORY ==========
+function getConvHistory() {
+  try {
+    return JSON.parse(localStorage.getItem('convHistory') || '[]');
+  } catch { return []; }
+}
+
+function saveConvHistory(history) {
+  localStorage.setItem('convHistory', JSON.stringify(history));
+}
+
+function addConvHistory(from, to, amount, result) {
+  const history = getConvHistory();
+  // Avoid duplicate: skip if last entry matches
+  if (history.length > 0) {
+    const last = history[0];
+    if (last.from === from && last.to === to && last.amount === amount) return;
+  }
+  const time = new Date().toLocaleString('zh-TW', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+  history.unshift({ from, to, amount, result, time });
+  if (history.length > 10) history.length = 10;
+  saveConvHistory(history);
+  renderConvHistory();
+}
+
+function clearConvHistory() {
+  localStorage.removeItem('convHistory');
+  renderConvHistory();
+}
+
+function renderConvHistory() {
+  const list = document.getElementById('convHistoryList');
+  const clearBtn = document.getElementById('convHistoryClearBtn');
+  const history = getConvHistory();
+
+  if (history.length === 0) {
+    list.innerHTML = '<div class="history-empty">尚無轉換紀錄</div>';
+    clearBtn.classList.add('hidden');
+    return;
+  }
+
+  clearBtn.classList.remove('hidden');
+  list.innerHTML = '';
+  history.forEach(item => {
+    const fc = getCurrency(item.from);
+    const tc = getCurrency(item.to);
+    const btn = document.createElement('button');
+    btn.className = 'history-item';
+    btn.onclick = () => {
+      fromCurrency = item.from;
+      toCurrency = item.to;
+      document.getElementById('amountInput').value = item.amount;
+      updateUI();
+    };
+    btn.innerHTML = `
+      <div class="history-item-top">
+        <span class="history-item-conversion">${fc ? fc.flag : ''} ${formatNum(item.amount)} ${item.from}</span>
+        <span class="history-item-time">${item.time}</span>
+      </div>
+      <div class="history-item-rate">→ ${tc ? tc.flag : ''} ${formatNum(item.result)} ${item.to}</div>
+    `;
+    list.appendChild(btn);
+  });
+}
+
+// ========== INIT ==========
+initTheme();
+updateUI();
+fetchRates();
+renderConvHistory();
+
+// Register Service Worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch(() => {});
+}
+</script>
+</body>
+</html>
