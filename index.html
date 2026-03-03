@@ -438,14 +438,13 @@ function convert(val, from, to) {
   const inUSD = parseFloat(val) / (rates[from] || 1);
   const result = inUSD * (rates[to] || 1);
   if (to === "VND" || to === "KRW") return result.toFixed(0);
-  if (to === "JPY") return result.toFixed(1);
-  return result.toFixed(2);
+  return result.toFixed(3);
 }
 
 function formatNum(str) {
   const num = parseFloat(str);
   if (isNaN(num)) return "0";
-  return num.toLocaleString(undefined, { maximumFractionDigits: 4 });
+  return num.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 3 });
 }
 
 // ========== UI UPDATE ==========
